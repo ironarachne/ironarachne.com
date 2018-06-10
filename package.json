@@ -1,0 +1,23 @@
+{
+  "name": "ironarachne.com",
+  "version": "1.0.0",
+  "description": "The Iron Arachne website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass sass/main.scss public/ironarachne.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/ironarachne/ironarachne.com.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/ironarachne/ironarachne.com/issues"
+  },
+  "homepage": "https://gitlab.com/ironarachne/ironarachne.com#README",
+  "dependencies": {
+    "bulma": "^0.7.1"
+  }
+}
