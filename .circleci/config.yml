@@ -5,12 +5,9 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/golang:1.11
-    working_directory: /go/src/github.com/ironarachne/ironarachne.com
+      - image: circleci/node:7.10
     steps:
       - checkout
-      - run: go get -v -t -d ./...
-      - run: go test -v ./...
       - setup_remote_docker:
           docker_layer_caching: true
       - run: |
