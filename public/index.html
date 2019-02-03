@@ -19,41 +19,58 @@
         <h2 class="subtitle">Procedural Generation Tools for Tabletop Role-playing Games</h2>
       </div>
     </section>
-  <div class="container">
+  <div class="container" id="app">
     <section class="section">
       <div class="columns">
-        <div class="column is-one-third">
-          <div class="has-text-centered">
-            <h3 class="title is-3">The Tools</h3>
-          </div>
-          <div class="box has-text-centered">
-            <p class="title"><a href="https://uncharted-worlds.ironarachne.com">Uncharted Worlds Character Generator</a></p>
-            <p class="subtitle">A random character generator for the Uncharted Worlds RPG, based on Powered by the Apocalypse.</p>
-          </div>
-          <div class="box has-text-centered">
-              <p class="title"><a href="https://heraldry.ironarachne.com">Heraldry Generator</a></p>
-              <p class="subtitle">A random coat-of-arms generator.</p>
-          </div>
-        </div>
         <div class="column content">
           <p>This website hosts tools intended to make life easier for players of tabletop RPGs. It's a living website, and
             will continue to receive new tools on a semiregular basis.</p>
-          <p>The coder behind this site and the tools it presents is <a href="https://benovermyer.com">Ben Overmyer</a>. Besides
+          <p>My name is <a href="https://benovermyer.com">Ben Overmyer</a>. I'm the developer behind this site and the tools it presents. Besides
           working on these tools, I also act as the art director for <a href="https://silvergryphongames.com">Silver Gryphon Games</a>.</p>
-          <h3 class="title is-3">Links to Other Generators</h3>
-          <p>The following is a list of other websites (in alphabetical order) that offer generators like these.</p>
-          <ul>
-            <li><a href="http://www.chaoticshiny.com/">Chaotic Shiny</a></li>
-            <li><a href="https://www.darkestofnights.com/index.php/gensmi.html">Darkest of Nights</a></li>
-            <li><a href="http://donjon.bin.sh/">Donjon</a></li>
-            <li><a href="https://www.trollmystic.com/pub/category/generators/">Eposic</a></li>
-            <li><a href="http://www.fantasynamegenerators.com/">Fantasy Name Generators</a></li>
-            <li><a href="https://www.mithrilandmages.com/">Mithril &amp; Mages</a></li>
-            <li><a href="http://www.rangen.co.uk/">RanGen</a></li>
-            <li><a href="https://www.seventhsanctum.com/">Seventh Sanctum</a></li>
-            <li><a href="http://www.springhole.net/writing_roleplaying_randomators/index.html">Springhole.net</a></li>
-          </ul>
+
+          <h3 class="title is-3">Big Generators</h3>
+          <p>These generators are complex enough to warrant their own separate pages.</p>
+
+          <div class="columns">
+            <div class="column">
+              <h4 class="title is-4"><a href="https://uncharted-worlds.ironarachne.com"><em>Uncharted Worlds</em><br> Character Generator</a></h4>
+              <p>A random character generator for the Uncharted Worlds RPG, based on Powered by the Apocalypse.</p>
+            </div>
+            <div class="column">
+              <h4 class="title is-4"><a href="https://heraldry.ironarachne.com">Heraldry Generator</a></h4>
+              <p>A random coat-of-arms generator. Roughly follows the rules of heraldry circa 14<sup>th</sup> century France.</p>
+            </div>
+          </div>
+
+          <h3 class="title is-3">Quick Generators</h3>
+          <p>The following are small generators that you run from this page.</p>
+
+          <h4 class="title is-4">Language Generator</h4>
+          <p>This generates a description of a fantasy language for you.</p>
+          <p><button class="button is-primary" v-on:click="generateLanguage">Generate New Language</button></p>
+          <blockquote>{{ languageDescription }}</blockquote>
         </div>
+        <div class="column is-one-third">
+          
+          <div class="has-text-centered content">
+            <h3 class="title is-3">External Generators</h3>
+          </div>
+          <div class="content">
+            <p>The following is a list of other websites that offer generators like these.</p>
+            <ul>
+              <li><a href="http://www.chaoticshiny.com/">Chaotic Shiny</a></li>
+              <li><a href="https://www.darkestofnights.com/index.php/gensmi.html">Darkest of Nights</a></li>
+              <li><a href="http://donjon.bin.sh/">Donjon</a></li>
+              <li><a href="https://www.trollmystic.com/pub/category/generators/">Eposic</a></li>
+              <li><a href="http://www.fantasynamegenerators.com/">Fantasy Name Generators</a></li>
+              <li><a href="https://www.mithrilandmages.com/">Mithril &amp; Mages</a></li>
+              <li><a href="http://www.rangen.co.uk/">RanGen</a></li>
+              <li><a href="https://www.seventhsanctum.com/">Seventh Sanctum</a></li>
+              <li><a href="http://www.springhole.net/writing_roleplaying_randomators/index.html">Springhole.net</a></li>
+            </ul>
+          </div>
+        </div>
+        
       </div>
     </section>
   </div>
@@ -68,6 +85,30 @@
       </div>
     </div>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
+  <script>
+  var app = new Vue({
+    el: '#app',
+    data: {
+      languageDescription: '',
+      languageName: ''
+    },
+    methods: {
+      generateLanguage: function (event) {
+        url = 'https://langgen.ironarachne.com/'
+        
+        fetch(url)
+        .then(response => response.json())
+        .then(response => {
+          this.languageDescription = response.Description
+        })
+        .catch(error => console.error(error));
+      }
+    }
+  })
+
+  app.generateLanguage()
+  </script>
 </body>
 
 </html>
