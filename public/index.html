@@ -11,34 +11,39 @@
 
 <body>
   <section class="hero is-dark">
-      <div class="hero-body">
-        <figure class="image is-128x128 is-pulled-left">
-          <img src="img/ia-logo-small.png" alt="Iron Arachne logo">
-        </figure>
-        <h1 class="title">Iron Arachne</h1>
-        <h2 class="subtitle">Procedural Generation Tools for Tabletop Role-playing Games</h2>
-      </div>
-    </section>
+    <div class="hero-body">
+      <figure class="image is-128x128 is-pulled-left">
+        <img src="img/ia-logo-small.png" alt="Iron Arachne logo">
+      </figure>
+      <h1 class="title">Iron Arachne</h1>
+      <h2 class="subtitle">Procedural Generation Tools for Tabletop Role-playing Games</h2>
+    </div>
+  </section>
   <div class="container" id="app">
     <section class="section">
       <div class="columns">
         <div class="column content">
-          <p>This website hosts tools intended to make life easier for players of tabletop RPGs. It's a living website, and
+          <p>This website hosts tools intended to make life easier for players of tabletop RPGs. It's a living website,
+            and
             will continue to receive new tools on a semiregular basis.</p>
-          <p>My name is <a href="https://benovermyer.com">Ben Overmyer</a>. I'm the developer behind this site and the tools it presents. Besides
-          working on these tools, I also act as the art director for <a href="https://silvergryphongames.com">Silver Gryphon Games</a>.</p>
+          <p>My name is <a href="https://benovermyer.com">Ben Overmyer</a>. I'm the developer behind this site and the
+            tools it presents. Besides
+            working on these tools, I also act as the art director for <a href="https://silvergryphongames.com">Silver
+              Gryphon Games</a>.</p>
 
           <h3 class="title is-3">Big Generators</h3>
           <p>These generators are complex enough to warrant their own separate pages.</p>
 
           <div class="columns">
             <div class="column">
-              <h4 class="title is-4"><a href="https://uncharted-worlds.ironarachne.com"><em>Uncharted Worlds</em><br> Character Generator</a></h4>
+              <h4 class="title is-4"><a href="https://uncharted-worlds.ironarachne.com"><em>Uncharted Worlds</em><br>
+                  Character Generator</a></h4>
               <p>A random character generator for the Uncharted Worlds RPG, based on Powered by the Apocalypse.</p>
             </div>
             <div class="column">
               <h4 class="title is-4"><a href="https://heraldry.ironarachne.com">Heraldry Generator</a></h4>
-              <p>A random coat-of-arms generator. Roughly follows the rules of heraldry circa 14<sup>th</sup> century France.</p>
+              <p>A random coat-of-arms generator. Roughly follows the rules of heraldry circa 14<sup>th</sup> century
+                France.</p>
             </div>
           </div>
 
@@ -49,9 +54,13 @@
           <p>This generates a description of a fantasy language for you.</p>
           <p><button class="button is-primary" v-on:click="generateLanguage">Generate New Language</button></p>
           <blockquote>{{ languageDescription }}</blockquote>
+
+          <h4 class="title is-4">Town Generator</h4>
+          <p>Need a quick town? Click here.</p>
+          <p><button class="button is-primary" v-on:click="generateTown">Generate New Town</button></p>
+          <blockquote>{{ townDescription }}</blockquote>
         </div>
         <div class="column is-one-third">
-          
           <div class="has-text-centered content">
             <h3 class="title is-3">External Generators</h3>
           </div>
@@ -70,7 +79,6 @@
             </ul>
           </div>
         </div>
-        
       </div>
     </section>
   </div>
@@ -79,7 +87,8 @@
       <div class="content has-text-centered">
         <p>
           <strong>Iron Arachne</strong> is the ongoing project of
-          <a href="https://benovermyer.com">Ben Overmyer</a>. You can find source code for most of these tools on GitHub at
+          <a href="https://benovermyer.com">Ben Overmyer</a>. You can find source code for most of these tools on
+          GitHub at
           <a href="https://github.com/ironarachne/">github.com/ironarachne</a>.
         </p>
       </div>
@@ -87,27 +96,47 @@
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
   <script>
-  var app = new Vue({
-    el: '#app',
-    data: {
-      languageDescription: '',
-      languageName: ''
-    },
-    methods: {
-      generateLanguage: function (event) {
-        url = 'https://langgen.ironarachne.com/'
-        
-        fetch(url)
-        .then(response => response.json())
-        .then(response => {
-          this.languageDescription = response.Description
-        })
-        .catch(error => console.error(error));
-      }
+    function getRandomInt(max) {
+      return Math.floor(Math.random() * Math.floor(max));
     }
-  })
+    var app = new Vue({
+      el: '#app',
+      data: {
+        languageDescription: '',
+        languageName: '',
+        townDescription: ''
+      },
+      methods: {
+        generateLanguage: function (event) {
+          url = 'https://langgen.ironarachne.com/'
 
-  app.generateLanguage()
+          fetch(url)
+            .then(response => response.json())
+            .then(response => {
+              this.languageDescription = response.Description
+            })
+            .catch(error => console.error(error));
+        },
+        generateTown: function (event) {
+          id = getRandomInt(1000000)
+          url = 'https://towngen.ironarachne.com/' + id
+
+          fetch(url)
+            .then(response => response.json())
+            .then(response => {
+              this.townDescription = response.townName + ' is a ' + response.region.Name + ' ' + response.category.name + ' of ' + response.population + ' people. '
+              exports = Object.keys(response.exports)
+              imports = Object.keys(response.imports)
+              this.townDescription += 'It exports ' + exports[0] + ' and imports ' + imports[0] + '. '
+              this.townDescription += 'The mayor is a ' + response.mayor.Race.Name + ' named ' + response.mayor.FirstName + ' ' + response.mayor.LastName + ', who is motivated by ' + response.mayor.Motivation + '.'
+            })
+            .catch(error => console.error(error));
+        }
+      }
+    })
+
+    app.generateLanguage()
+    app.generateTown()
   </script>
 </body>
 
