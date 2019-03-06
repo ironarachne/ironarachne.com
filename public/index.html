@@ -71,6 +71,11 @@
           <p>Need a quick town? Click here.</p>
           <p><button class="button is-primary" v-on:click="generateTown">Generate New Town</button></p>
           <blockquote>{{ townDescription }}</blockquote>
+          
+          <h4 class="title is-4">Organization Generator</h4>
+          <p>This generates a fantasy organization.</p>
+          <p><button class="button is-primary" v-on:click="generateOrganization">Generate New Organization</button></p>
+          <blockquote>{{ organizationDescription }}</blockquote>
         </div>
         <div class="column is-one-third">
           <div class="has-text-centered content">
@@ -116,6 +121,7 @@
       data: {
         languageDescription: '',
         languageName: '',
+        organizationDescription: '',
         townDescription: ''
       },
       methods: {
@@ -126,6 +132,17 @@
             .then(response => response.json())
             .then(response => {
               this.languageDescription = response.Description
+            })
+            .catch(error => console.error(error));
+        },
+        generateOrganization: function (event) {
+          id = getRandomInt(1000000)
+          url = 'https://orggen.ironarachne.com/' + id
+
+          fetch(url)
+            .then(response => response.json())
+            .then(response => {
+              this.organizationDescription = 'The ' + response.Name + ', ' + response.Type.Name + '. They are a ' + response.SizeClass.Name + ' group with ' + response.Size + ' members. They are considered to be ' + response.PrimaryTrait + '.'
             })
             .catch(error => console.error(error));
         },
