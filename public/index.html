@@ -153,7 +153,7 @@
           fetch(url)
             .then(response => response.json())
             .then(response => {
-              this.townDescription = response.townName + ' is a ' + response.region.Name + ' ' + response.category.name + ' of ' + response.population + ' people. '
+              this.townDescription = response.townName + ' is a ' + response.category.name + ' of ' + response.population + ' people. It\'s in a ' + response.climate.Name + ' climate.'
               exports = Object.keys(response.exports)
               imports = Object.keys(response.imports)
               this.townDescription += 'It exports ' + exports[0] + ' and imports ' + imports[0] + '. '
