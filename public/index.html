@@ -25,7 +25,6 @@
         <a class="navbar-item" href="index.html">Home</a>
         <a class="navbar-item" href="region.html">Region Generator</a>
         <a class="navbar-item" href="https://heraldry.ironarachne.com">Heraldry Generator</a>
-        <a class="navbar-item" href="https://uncharted-worlds.ironarachne.com">UW Character Generator</a>
       </div>
     </nav>
     <section class="section">
@@ -43,11 +42,6 @@
           <p>These generators are complex enough to warrant their own separate pages.</p>
 
           <div class="columns">
-            <div class="column">
-              <h4 class="title is-4"><a href="https://uncharted-worlds.ironarachne.com"><em>Uncharted Worlds</em><br>
-                  Character Generator</a></h4>
-              <p>A random character generator for the Uncharted Worlds RPG, based on Powered by the Apocalypse.</p>
-            </div>
             <div class="column">
               <h4 class="title is-4"><a href="https://heraldry.ironarachne.com">Heraldry Generator</a></h4>
               <p>A random coat-of-arms generator. Roughly follows the rules of heraldry circa 14<sup>th</sup> century
@@ -71,7 +65,7 @@
           <p>Need a quick town? Click here.</p>
           <p><button class="button is-primary" v-on:click="generateTown">Generate New Town</button></p>
           <blockquote>{{ townDescription }}</blockquote>
-          
+
           <h4 class="title is-4">Organization Generator</h4>
           <p>This generates a fantasy organization.</p>
           <p><button class="button is-primary" v-on:click="generateOrganization">Generate New Organization</button></p>
@@ -153,7 +147,7 @@
           fetch(url)
             .then(response => response.json())
             .then(response => {
-              this.townDescription = response.townName + ' is a ' + response.category.name + ' of ' + response.population + ' people. It\'s in a ' + response.climate.Name + ' climate.'
+              this.townDescription = response.townName + ' is a ' + response.category.name + ' of ' + response.population + ' people. It\'s in a ' + response.climate.Name + ' climate. '
               exports = Object.keys(response.exports)
               imports = Object.keys(response.imports)
               this.townDescription += 'It exports ' + exports[0] + ' and imports ' + imports[0] + '. '
