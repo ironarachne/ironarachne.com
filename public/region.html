@@ -85,6 +85,13 @@
                 </div>
               </div>
             </div>
+            <h4 class="title is-4">Notable Organizations in {{ region.Name }}</h4>
+            <div v-for="organization in region.Organizations" class="content">
+              <h5 class="title is-5">{{ organization.Name }}</h5>
+              <p><strong>Type:</strong> {{ organization.Type.Name }}</p>
+              <p><strong>Size:</strong> {{ organization.SizeClass.Name }}, with {{ organization.Size }} members</p>
+              <p><strong>Primary Trait:</strong> {{ organization.PrimaryTrait }}</p>
+            </div>
         </div>
       </div>
     </section>
