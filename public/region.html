@@ -23,6 +23,7 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="index.html">Home</a>
+        <a class="navbar-item" href="culture.html">Culture Generator</a>
         <a class="navbar-item" href="region.html">Region Generator</a>
         <a class="navbar-item" href="https://heraldry.ironarachne.com">Heraldry Generator</a>
       </div>
@@ -30,68 +31,68 @@
     <section class="section">
       <div class="columns">
         <div class="column content">
-          <h2 class="title is-2">Region Generator</h4>
-            <p><button class="button is-primary" v-on:click="generateRegion">Generate New Region</button></p>
-            <h3 class="title is-3">The {{ region.Class.Name }} of {{ region.Name }}</h3>
-            <p>The {{ region.Class.Name }} of {{ region.Name }} is ruled by {{ region.RulerTitle }}
-              {{ region.Ruler.FirstName }} {{ region.Ruler.LastName }}. It's a {{ region.Biome }} region, and its
-              capital is {{ region.Capital }}. </p>
-            <div class="box">
-              <article class="media">
-                <div class="media-left">
-                  <figure class="image is-320x420">
-                    <img :src="heraldryUrl" class="image">
-                    <p><em>{{ region.RulerBlazon }}</em></p>
-                  </figure>
-                </div>
-                <div class="media-content">
-                  <p class="title">{{ region.Ruler.FirstName }} {{ region.Ruler.LastName }}</p>
-                  <p class="subtitle">{{ region.RulerTitle }} of {{ region.Name }}</p>
-                  <p><strong>Race:</strong> {{ region.Ruler.Race.Name }}</p>
-                  <p><strong>Gender:</strong> {{ region.Ruler.Gender }}</p>
-                  <p><strong>Age:</strong> {{ region.Ruler.Age }} years ({{ region.Ruler.AgeCategory }})</p>
-                  <p><strong>Height:</strong> {{ region.Ruler.Height }} in.</p>
-                  <p><strong>Weight:</strong> {{ region.Ruler.Weight }} lbs.</p>
-                  <p><strong>Hair:</strong> {{ region.Ruler.HairColor }} and {{ region.Ruler.HairStyle }}</p>
-                  <p><strong>Eyes:</strong> {{ region.Ruler.EyeColor }}</p>
-                  <p><strong>Hobby:</strong> {{ region.Ruler.Hobby }}</p>
-                  <p><strong>Motivation:</strong> {{ region.Ruler.Motivation }}</p>
-                  <p><strong>Traits: </strong> <span
-                      v-for="(trait,index) in region.Ruler.PsychologicalTraits">{{ trait }}<span
-                        v-if="index != region.Ruler.PsychologicalTraits.length - 1">, </span></span> </p>
-                </div>
-              </article>
-            </div>
-            <h4 class="title is-4">Notable Towns in {{ region.Name }}</h4>
-            <div v-for="town in region.Towns" class="content">
-              <h5 class="title is-5">{{ town.townName }}<span v-if="town.townName == region.Capital">, the capital and
-                  {{ region.RulerTitle }} {{ region.Ruler.LastName }}'s home</span></h5>
-              <p><strong>Population:</strong> {{ town.population }} ({{ town.category.name }})</p>
-              <p><strong>Mayor:</strong> {{ town.mayor.FirstName }} {{ town.mayor.LastName }}, a
-                {{ town.mayor.Age }}-year-old {{ town.mayor.Gender }} {{ town.mayor.Race.Name }} motivated by
-                {{ town.mayor.Motivation }}</p>
-              <div class="columns">
-                <div class="column">
-                  <h6 class="title is-6">Exports</h6>
-                  <ul>
-                    <li v-for="(amount, item) in town.exports">{{ item }}</li>
-                  </ul>
-                </div>
-                <div class="column">
-                  <h6 class="title is-6">Imports</h6>
-                  <ul>
-                    <li v-for="(amount, item) in town.imports">{{ item }}</li>
-                  </ul>
-                </div>
+          <h2 class="title is-2">Region Generator</h2>
+          <p><button class="button is-primary" v-on:click="generateRegion">Generate New Region</button></p>
+          <h3 class="title is-3">The {{ region.Class.Name }} of {{ region.Name }}</h3>
+          <p>The {{ region.Class.Name }} of {{ region.Name }} is ruled by {{ region.RulerTitle }}
+            {{ region.Ruler.FirstName }} {{ region.Ruler.LastName }}. It's a {{ region.Biome }} region, and its
+            capital is {{ region.Capital }}. </p>
+          <div class="box">
+            <article class="media">
+              <div class="media-left">
+                <figure class="image is-320x420">
+                  <img :src="heraldryUrl" class="image">
+                  <p><em>{{ region.RulerBlazon }}</em></p>
+                </figure>
+              </div>
+              <div class="media-content">
+                <p class="title">{{ region.Ruler.FirstName }} {{ region.Ruler.LastName }}</p>
+                <p class="subtitle">{{ region.RulerTitle }} of {{ region.Name }}</p>
+                <p><strong>Race:</strong> {{ region.Ruler.Race.Name }}</p>
+                <p><strong>Gender:</strong> {{ region.Ruler.Gender }}</p>
+                <p><strong>Age:</strong> {{ region.Ruler.Age }} years ({{ region.Ruler.AgeCategory }})</p>
+                <p><strong>Height:</strong> {{ region.Ruler.Height }} in.</p>
+                <p><strong>Weight:</strong> {{ region.Ruler.Weight }} lbs.</p>
+                <p><strong>Hair:</strong> {{ region.Ruler.HairColor }} and {{ region.Ruler.HairStyle }}</p>
+                <p><strong>Eyes:</strong> {{ region.Ruler.EyeColor }}</p>
+                <p><strong>Hobby:</strong> {{ region.Ruler.Hobby }}</p>
+                <p><strong>Motivation:</strong> {{ region.Ruler.Motivation }}</p>
+                <p><strong>Traits: </strong> <span
+                    v-for="(trait,index) in region.Ruler.PsychologicalTraits">{{ trait }}<span
+                      v-if="index != region.Ruler.PsychologicalTraits.length - 1">, </span></span> </p>
+              </div>
+            </article>
+          </div>
+          <h4 class="title is-4">Notable Towns in {{ region.Name }}</h4>
+          <div v-for="town in region.Towns" class="content">
+            <h5 class="title is-5">{{ town.townName }}<span v-if="town.townName == region.Capital">, the capital and
+                {{ region.RulerTitle }} {{ region.Ruler.LastName }}'s home</span></h5>
+            <p><strong>Population:</strong> {{ town.population }} ({{ town.category.name }})</p>
+            <p><strong>Mayor:</strong> {{ town.mayor.FirstName }} {{ town.mayor.LastName }}, a
+              {{ town.mayor.Age }}-year-old {{ town.mayor.Gender }} {{ town.mayor.Race.Name }} motivated by
+              {{ town.mayor.Motivation }}</p>
+            <div class="columns">
+              <div class="column">
+                <h6 class="title is-6">Exports</h6>
+                <ul>
+                  <li v-for="(amount, item) in town.exports">{{ item }}</li>
+                </ul>
+              </div>
+              <div class="column">
+                <h6 class="title is-6">Imports</h6>
+                <ul>
+                  <li v-for="(amount, item) in town.imports">{{ item }}</li>
+                </ul>
               </div>
             </div>
-            <h4 class="title is-4">Notable Organizations in {{ region.Name }}</h4>
-            <div v-for="organization in region.Organizations" class="content">
-              <h5 class="title is-5">{{ organization.Name }}</h5>
-              <p><strong>Type:</strong> {{ organization.Type.Name }}</p>
-              <p><strong>Size:</strong> {{ organization.SizeClass.Name }}, with {{ organization.Size }} members</p>
-              <p><strong>Primary Trait:</strong> {{ organization.PrimaryTrait }}</p>
-            </div>
+          </div>
+          <h4 class="title is-4">Notable Organizations in {{ region.Name }}</h4>
+          <div v-for="organization in region.Organizations" class="content">
+            <h5 class="title is-5">{{ organization.Name }}</h5>
+            <p><strong>Type:</strong> {{ organization.Type.Name }}</p>
+            <p><strong>Size:</strong> {{ organization.SizeClass.Name }}, with {{ organization.Size }} members</p>
+            <p><strong>Primary Trait:</strong> {{ organization.PrimaryTrait }}</p>
+          </div>
         </div>
       </div>
     </section>

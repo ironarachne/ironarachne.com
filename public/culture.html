@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Iron Arachne</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Procedural generation tools for tabletop role-playing games.">
+  <link rel="stylesheet" href="ironarachne.css" type="text/css">
+</head>
+
+<body>
+  <section class="hero is-dark">
+    <div class="hero-body">
+      <figure class="image is-128x128 is-pulled-left">
+        <img src="img/ia-logo-small.png" alt="Iron Arachne logo">
+      </figure>
+      <h1 class="title">Iron Arachne</h1>
+      <h2 class="subtitle">Procedural Generation Tools for Tabletop Role-playing Games</h2>
+    </div>
+  </section>
+  <div class="container" id="app">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="index.html">Home</a>
+        <a class="navbar-item" href="culture.html">Culture Generator</a>
+        <a class="navbar-item" href="region.html">Region Generator</a>
+        <a class="navbar-item" href="https://heraldry.ironarachne.com">Heraldry Generator</a>
+      </div>
+    </nav>
+    <section class="section">
+      <div class="columns">
+        <div class="column content">
+          <h2 class="title is-2">Culture Generator</h2>
+          <p><button class="button is-primary" v-on:click="generateCulture">Generate New Culture</button></p>
+          <p>This culture is called the <em>{{ culture.Name }}</em>. Its people are the {{ culture.Adjective }}.</p>
+          <p>They speak a {{ culture.Language.Descriptors[0] }} language called {{ culture.Language.Adjective }}. It
+            uses an {{ culture.Language.WritingSystem.Classification }}
+            writing system made mostly of {{ culture.Language.WritingSystem.StrokeType }}.
+          </p>
+
+          <h3 class="title is-3">Common Names</h3>
+          <div class="columns">
+            <div class="column">
+              <h4 class="title is-4">Male Names</h4>
+              <ul>
+                <li v-for="name in culture.CommonMaleNames">{{ name }}</li>
+              </ul>
+            </div>
+            <div class="column">
+              <h4 class="title is-4">Female Names</h4>
+              <ul>
+                <li v-for="name in culture.CommonFemaleNames">{{ name }}</li>
+              </ul>
+            </div>
+            <div class="column">
+              <h4 class="title is-4">Family Names</h4>
+              <ul>
+                <li v-for="name in culture.CommonFamilyNames">{{ name }}</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3 class="title is-3">Music</h3>
+          <p>Music of the {{ culture.Adjective }} is mostly {{ culture.MusicStyle.Descriptors[0] }}. Common instruments
+            include:</p>
+          <ul>
+            <li v-for="instrument in culture.MusicStyle.Instruments">{{ instrument }}</li>
+          </ul>
+
+          <h3 class="title is-3">Clothing</h3>
+          <p>As the {{ culture.Adjective }} hail originally from the {{ culture.HomeClimate.Name }}, their clothing
+            style is appropriate for
+            that kind of region. They often wear the following:
+          </p>
+          <ul>
+            <li v-for="item in culture.ClothingStyle.CommonItems">{{ item }}</li>
+          </ul>
+          <p>Common colors include <span v-for="(color, index) in culture.ClothingStyle.CommonColors">
+              <span v-if="index == culture.ClothingStyle.CommonColors.length - 1">and </span>
+              {{ color }}
+              <span v-if="index != culture.ClothingStyle.CommonColors.length - 1">, </span></span>. Decoration tends
+            towards {{ culture.ClothingStyle.DecorativeStyle }}.</p>
+          <p>Clothing is most often made of the following materials:</p>
+          <ul>
+            <li v-for="item in culture.ClothingStyle.CommonMaterials">{{ item }}</li>
+          </ul>
+          <div v-if="culture.ClothingStyle.CommonJewelry != null">
+            <p>For jewelry, some of the following are common:</p>
+            <ul>
+              <li v-for="item in culture.ClothingStyle.CommonJewelry">{{ item }}</li>
+            </ul>
+          </div>
+
+          <h3 class="title is-3">Food and Drink</h3>
+          <p>Common dishes for the {{ culture.Adjective }} include:</p>
+          <ul>
+            <li v-for="item in culture.FoodStyle.CommonDishes">{{ item }}</li>
+          </ul>
+          <p>As far as eating customs go, they have the following:</p>
+          <ul>
+            <li v-for="item in culture.FoodStyle.EatingTraits">{{ item }}</li>
+          </ul>
+          <div v-if="culture.FoodStyle.Breads != null">
+            <p>Common breads include:</p>
+            <ul>
+              <li v-for="item in culture.FoodStyle.Breads">{{ item }}</li>
+            </ul>
+          </div>
+          <div v-if="culture.FoodStyle.AlcoholicDrinks != null">
+            <p>The most common alcoholic beverages are:</p>
+            <ul>
+              <li v-for="item in culture.FoodStyle.AlcoholicDrinks">a {{ item.Strength }} {{ item.Name }}</li>
+            </ul>
+          </div>
+
+          <h3 class="title is-3">Religion</h3>
+          <p>The {{ culture.Adjective }} have a {{ culture.Religion.Class.Name }} outlook. They gather in
+            {{ culture.Religion.GatheringPlaceName }}s.</p>
+          <div v-if="culture.Religion.Class.PantheonMaxSize > 0" class="content">
+            <h4 class="title is-4">Deities</h4>
+            <p>The deities of the {{ culture.Adjective }} are as follows:</p>
+            <div v-for="deity in culture.Religion.Pantheon.Deities" class="content">
+              <h5 class="title is-5">{{ deity.Name }}</h5>
+              <p>
+                {{ deity.Name }} is the <span v-if="deity.Gender == 'female'">goddess</span><span
+                  v-if="deity.Gender != 'female'">god</span>
+                of <span v-if="deity.Domains != null">
+                  <span v-for="(domain, index) in deity.Domains">
+                    <span v-if="index == deity.Domains.length - 1 && deity.Domains.length > 1">and
+                    </span>{{ domain }}<span v-if="index != deity.Domains.length - 1">, </span></span></span>
+                <span v-else>no particular domain</span>. <span v-if="deity.Gender == 'female'">She</span><span
+                  v-else>He</span> is {{ deity.Appearance }}, with a
+                <span v-for="(item, index) in deity.PersonalityTraits"><span
+                    v-if="index == deity.PersonalityTraits.length - 1 && deity.PersonalityTraits.length > 1"> and</span>
+                  {{ item }}</span> personality.
+              </p>
+
+            </div>
+            <div v-if="culture.Religion.Pantheon.Deities.length > 1" class="content">
+              <h4 class="title is-4">Relationships of the Gods</h4>
+              <p>The following are the notable relationships between {{ culture.Adjective }} deities.</p>
+              <ul>
+                <li v-for="item in culture.Religion.Pantheon.Relationships">{{ item.Origin.Name }} {{ item.Descriptor }}
+                  {{ item.Target.Name }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <p>
+          <strong>Iron Arachne</strong> is the ongoing project of
+          <a href="https://benovermyer.com">Ben Overmyer</a>. You can find source code for most of these tools on
+          GitHub at
+          <a href="https://github.com/ironarachne/">github.com/ironarachne</a>.
+        </p>
+      </div>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
+  <script>
+    function getRandomInt(max) {
+      return Math.floor(Math.random() * Math.floor(max));
+    }
+
+    function getPreposition(word) {
+      firstLetter = word.CharAt(0)
+      vowels = ['a', 'e', 'i', 'o', 'u']
+      if (vowels.includes(firstLetter)) {
+        return "an"
+      } else {
+        return "a"
+      }
+    }
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        culture: ''
+      },
+      methods: {
+        generateCulture: function (event) {
+          id = getRandomInt(1000000)
+          url = 'https://culturegen.ironarachne.com/' + id
+
+          fetch(url)
+            .then(response => response.json())
+            .then(response => {
+              this.culture = response
+            })
+            .catch(error => console.error(error));
+        }
+      }
+    })
+
+    app.generateCulture()
+  </script>
+</body>
+
+</html>
